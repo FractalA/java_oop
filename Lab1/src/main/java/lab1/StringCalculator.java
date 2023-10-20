@@ -1,13 +1,13 @@
 package lab1;
 import java.util.Scanner;
 
-
 public class StringCalculator {
     public static int Add(String numbers) {
         if (numbers.isEmpty()) {
             return 0;
         }
-        String[] numArr = numbers.split(",");
+        String[] delimiters = { ",|\\\\n" };
+        String[] numArr = numbers.split(String.join("|", delimiters));
         int res = 0;
         for (String num : numArr) {
             num = num.trim();
