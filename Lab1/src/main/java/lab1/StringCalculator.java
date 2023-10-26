@@ -14,14 +14,27 @@ public class StringCalculator {
         String delimiter = ",|\\\\n";
 
         if (numbers.startsWith("//")) {
-            Pattern pattern = Pattern.compile("//(.*?)\\\\n");
+            Pattern pattern = Pattern.compile("//(\\[(.*?)\\]|(.*?))\\\\n(.+)");
             Matcher matcher = pattern.matcher(numbers);
             if (matcher.find()) {
-                String customDelimiter = matcher.group(1);
-                delimiter = Pattern.quote(customDelimiter) + "|\\\\n|,";
-                numbers = numbers.substring(matcher.end());
+                String customDelimiterGroup = matcher.group(1);
+                if (matcher.group(2) != null) {
+                    // Формат с квадратными скобками
+                    Pattern delimiterPattern = Pattern.compile("\\[(.*?)\\]");
+                    Matcher delimiterMatcher = delimiterPattern.matcher(customDelimiterGroup);
+                    List<String> customDelimiters = new ArrayList<>();
+                    while (delimiterMatcher.find()) {
+                        customDelimiters.add(Pattern.quote(delimiterMatcher.group(1)));
+                    }
+                    delimiter = String.join("|", customDelimiters);
+                } else {
+                    delimiter = Pattern.quote(customDelimiterGroup);
+                }
+                numbers = matcher.group(4);
             }
         }
+
+        delimiter += "|,";
 
         String[] numArr = numbers.split(delimiter);
         int res = 0;
@@ -36,12 +49,12 @@ public class StringCalculator {
                     System.err.println("помилка: від'ємне число " + x + " ігнорується.");
                 } else if (x > 1000) {
                     largeNumbers.add(x);
-                    System.err.println("помилка: велике число " + x + " игнорується.");
+                    System.err.println("помилка: велике число " + x + " ігнорується.");
                 } else {
                     res += x;
                 }
             } catch (NumberFormatException e) {
-                System.err.println("помилка: недійсне число ігнорується.");
+                System.err.println("помилка: недійсне число " + num + " ігнорується.");
             }
         }
 
@@ -55,6 +68,7 @@ public class StringCalculator {
 
         return res;
     }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
