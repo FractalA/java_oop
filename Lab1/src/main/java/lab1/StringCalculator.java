@@ -7,7 +7,7 @@ public class StringCalculator {
         if (numbers.isEmpty()) {
             return 0;
         }
-        String[] numArr = numbers.split(",");
+        String[] numArr = numbers.split("," );
         int res = 0;
         for (String num : numArr) {
             num = num.trim();
