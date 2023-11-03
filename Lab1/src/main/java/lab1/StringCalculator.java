@@ -41,7 +41,7 @@ public class StringCalculator {
                     res += x;
                 }
             } catch (NumberFormatException e) {
-                System.err.println("помилка: недійсне число ігнорується.");
+                System.err.println("помилка: недійсне число " + num +  " ігнорується.");
             }
         }
 
@@ -55,6 +55,7 @@ public class StringCalculator {
 
         return res;
     }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
