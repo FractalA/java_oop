@@ -34,10 +34,10 @@ public class StringCalculator {
                 if (x < 0) {
                     negativeNumbers.add(x);
                     System.err.println("помилка: від'ємне число " + x + " ігнорується.");
-                } //else if (x > 1000) {
-                    //largeNumbers.add(x);
-                    //System.err.println("помилка: велике число " + x + " игнорується.");
-                 else {
+                } else if (x > 1000) {
+                    largeNumbers.add(x);
+                    System.err.println("помилка: велике число " + x + " игнорується.");
+                } else {
                     res += x;
                 }
             } catch (NumberFormatException e) {
@@ -49,9 +49,9 @@ public class StringCalculator {
             System.err.println("Від'ємні числа: " + negativeNumbers);
         }
 
-//        if (!largeNumbers.isEmpty()) {
-//            System.err.println("Великі числа: " + largeNumbers);
-//        }
+        if (!largeNumbers.isEmpty()) {
+            System.err.println("Великі числа: " + largeNumbers);
+        }
 
         return res;
     }
